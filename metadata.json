@@ -1,0 +1,15 @@
+{
+  "uuid": "prime-selector@amanoske.github.com",
+  "name": "Prime Selector",
+  "description": "Control NVIDIA PRIME GPU profiles from GNOME Quick Settings. Shows the current prime-select profile and lets you switch between Integrated Graphics (intel), NVIDIA, and On-Demand.",
+  "shell-version": [
+    "45",
+    "46",
+    "47",
+    "48",
+    "49"
+  ],
+  "url": "https://github.com/amanoske/primecontrol",
+  "version": 1,
+  "version-name": "1.0"
+}
