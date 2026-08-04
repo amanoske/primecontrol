@@ -24,8 +24,11 @@ A GNOME Shell extension that adds a **Prime Selector** tile to Quick Settings fo
 Run **without sudo** from this repo:
 
 ```bash
+git pull
 ./install.sh
 ```
+
+The installer detects your `gnome-shell --version` and writes it into `metadata.json` so Extension Manager does not mark it incompatible.
 
 GNOME does not pick up a newly copied extension until the Shell reloads. Do that next:
 
@@ -46,6 +49,17 @@ gnome-extensions enable prime-selector@amanoske.github.com
 ```
 
 Open the system menu (top-right) and look for **Prime Selector** in Quick Settings.
+
+### "Incompatible with current GNOME version"?
+
+Re-run `./install.sh` from an up-to-date checkout. It patches `shell-version` for your running Shell. Then reload/log out and enable again.
+
+Check:
+
+```bash
+gnome-shell --version
+cat ~/.local/share/gnome-shell/extensions/prime-selector@amanoske.github.com/metadata.json
+```
 
 ### "Extension does not exist"?
 
