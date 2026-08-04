@@ -1,6 +1,6 @@
 # Prime Selector
 
-A GNOME Shell extension that adds a **Prime Selector** tile to Quick Settings for controlling NVIDIA PRIME profiles via `prime-select`.
+A GNOME Shell extension that adds a **Prime Selector** tile to Quick Settings for controlling NVIDIA Optimus profiles via `prime-select`.
 
 ## Features
 
