@@ -21,14 +21,43 @@ A GNOME Shell extension that adds a **Prime Selector** tile to Quick Settings fo
 
 ## Install
 
+Run **without sudo** from this repo:
+
 ```bash
 ./install.sh
+```
+
+GNOME does not pick up a newly copied extension until the Shell reloads. Do that next:
+
+**X11**
+1. Press `Alt+F2`, type `r`, press Enter
+2. Then enable:
+
+```bash
 gnome-extensions enable prime-selector@amanoske.github.com
 ```
 
-Then log out and back in (or on X11: Alt+F2 → `r` → Enter).
+**Wayland**
+1. Log out and log back in
+2. Then enable:
+
+```bash
+gnome-extensions enable prime-selector@amanoske.github.com
+```
 
 Open the system menu (top-right) and look for **Prime Selector** in Quick Settings.
+
+### "Extension does not exist"?
+
+That almost always means the Shell has not rescanned extensions yet. Reload/log out first, then run `enable` again.
+
+Confirm the files landed in your user extensions directory (not root's):
+
+```bash
+ls ~/.local/share/gnome-shell/extensions/prime-selector@amanoske.github.com
+gnome-extensions list | grep prime
+gnome-shell --version
+```
 
 ## Uninstall
 
