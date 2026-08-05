@@ -15,12 +15,13 @@ import {
 } from './prime.js';
 
 const ICON_NAME = 'video-display-symbolic';
+const TOGGLE_TITLE = 'GPU';
 
 const PrimeSelectorToggle = GObject.registerClass(
 class PrimeSelectorToggle extends QuickSettings.QuickMenuToggle {
     _init() {
         super._init({
-            title: 'Prime Selector',
+            title: TOGGLE_TITLE,
             iconName: ICON_NAME,
             toggleMode: false,
         });
@@ -30,7 +31,7 @@ class PrimeSelectorToggle extends QuickSettings.QuickMenuToggle {
         this._monitor = null;
         this._currentProfile = queryProfile();
 
-        this.menu.setHeader(ICON_NAME, 'Prime Selector', 'Choose a GPU profile');
+        this.menu.setHeader(ICON_NAME, TOGGLE_TITLE, 'Choose a GPU profile');
         this._buildMenu();
         this._refresh();
 
@@ -69,17 +70,17 @@ class PrimeSelectorToggle extends QuickSettings.QuickMenuToggle {
         if (!available) {
             this.subtitle = 'Unavailable';
             this.checked = false;
-            this.menu.setHeader(ICON_NAME, 'Prime Selector', 'prime-select not found');
+            this.menu.setHeader(ICON_NAME, TOGGLE_TITLE, 'prime-select not found');
         } else if (this._switching) {
             this.subtitle = 'Switching…';
-            this.menu.setHeader(ICON_NAME, 'Prime Selector', 'Switching GPU profile…');
+            this.menu.setHeader(ICON_NAME, TOGGLE_TITLE, 'Switching GPU profile…');
         } else {
             this.subtitle = this._currentProfile;
             this.checked = this._currentProfile === 'nvidia' ||
                 this._currentProfile === 'on-demand';
             this.menu.setHeader(
                 ICON_NAME,
-                'Prime Selector',
+                TOGGLE_TITLE,
                 profileLabel(this._currentProfile)
             );
         }
