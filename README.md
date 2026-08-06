@@ -38,6 +38,8 @@ git pull
 ./install.sh
 ```
 
+If you previously installed an older build under `prime-selector@amanoske.github.com`, uninstall that first (or remove that directory) before enabling the new UUID.
+
 The installer detects your `gnome-shell --version` and writes it into `metadata.json` so Extension Manager does not mark it incompatible.
 
 GNOME does not pick up a newly copied extension until the Shell reloads. Do that next:
