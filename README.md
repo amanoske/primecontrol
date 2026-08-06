@@ -3,8 +3,6 @@
 
 Prime Control is a Gnome Extension that uses the _prime-select_ feature in Nvidia's proprietary drivers to switch between GPU output profiles. Similar to older tools like envycontrol, Prime Control allows you to quickly change output modes in pursuit of performance optimization and power conservation.  
 
-**Note:** For some GPUs (e.g.: Ampere/RTX 30-series) you may be required to restart your system after selecting a new profile. 
-
 ## Profiles
 
 Prime Control allows you to swap between three different output profiles:
@@ -14,6 +12,8 @@ Prime Control allows you to swap between three different output profiles:
 **Nvidia**: Your computer will use only your dedicated Nvidia GPU and disable your integrated graphics. Ideal for maximizing performance and latency in gaming and AI operations. 
 
 **Optimus**: Your computer will use Nvidia's Optimus feature, outputting via your integrated GPU and switching dynamically to your dGPU during certain types of operations (e.g.: serving LLMs, playing games). While distributions like Ubuntu may be automatic, forcing the use of a dGPU may require you to use "prime-run" command when starting a process. In prime-select query, the name of this mode is 'on-demand.'
+
+**Note:** For some GPUs (e.g.: Ampere/RTX 30-series) you may be required to restart your system after selecting a new profile.
 
 ## Requirements 
 - GNOME Shell 45+
