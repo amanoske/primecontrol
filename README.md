@@ -8,7 +8,9 @@ Prime Control is a Gnome Shell Extension that uses the _prime-select_ feature in
 Prime Control allows you to switch between three different output profiles:
 
 **Optimus** (Default profile): 
-Your computer will use Nvidia's Optimus feature, outputting via your integrated GPU and switching dynamically to your dGPU during certain types of operations (e.g.: serving LLM inference, playing games). While distributions like Ubuntu may be automatic, forcing the use of a dedicated GPU for some applications or services may require you to use "prime-run" command when starting a process. 
+Your computer will use Nvidia's Optimus feature, outputting most tasks with your integrated GPU by default but still powering your dedicated GPU and enabling you to dynamically execute some high performance tasks on it (e.g.: serving LLM inference, playing games).
+
+While distributions like Ubuntu may be automatic, forcing the use of a dedicated GPU for some applications or services may require you to use `prime-run` command when starting a process. 
 
 In prime-select query, the name of this mode is `on-demand`.
 
