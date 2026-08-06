@@ -75,7 +75,7 @@ class PrimeSelectorToggle extends QuickSettings.QuickMenuToggle {
             this.subtitle = 'Switching…';
             this.menu.setHeader(ICON_NAME, TOGGLE_TITLE, 'Switching GPU profile…');
         } else {
-            this.subtitle = this._currentProfile;
+            this.subtitle = profileLabel(this._currentProfile);
             this.checked = this._currentProfile === 'nvidia' ||
                 this._currentProfile === 'on-demand';
             this.menu.setHeader(

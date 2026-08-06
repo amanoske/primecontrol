@@ -1,20 +1,21 @@
 import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
 
+// prime-select query ids → UI labels shown in Quick Settings.
 export const PROFILES = Object.freeze([
     {
         id: 'intel',
-        label: 'Integrated Graphics',
+        label: 'Integrated',
         description: 'Use the integrated GPU for power saving',
     },
     {
         id: 'nvidia',
-        label: 'NVIDIA',
+        label: 'Nvidia',
         description: 'Use the discrete NVIDIA GPU',
     },
     {
         id: 'on-demand',
-        label: 'On-Demand',
+        label: 'Optimus',
         description: 'Integrated by default, NVIDIA on demand',
     },
 ]);
@@ -59,13 +60,15 @@ export function queryProfile() {
 }
 
 /**
- * Human-readable label for a prime-select profile id.
+ * Map a prime-select query id to the UI label.
+ * intel → Integrated, nvidia → Nvidia, on-demand → Optimus
  *
  * @param {string} profileId
  * @returns {string}
  */
 export function profileLabel(profileId) {
-    const match = PROFILES.find(profile => profile.id === profileId);
+    const normalized = (profileId || '').trim().toLowerCase();
+    const match = PROFILES.find(profile => profile.id === normalized);
     return match ? match.label : profileId;
 }
 

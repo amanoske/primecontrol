@@ -5,11 +5,14 @@ A GNOME Shell extension that adds a **Prime Selector** tile to Quick Settings fo
 ## Features
 
 - Quick Settings widget modeled after Power Mode
-- Subtitle shows the current `prime-select query` result (`intel`, `nvidia`, or `on-demand`)
+- Subtitle maps `prime-select query` to a short label:
+  - `intel` → **Integrated**
+  - `nvidia` → **Nvidia**
+  - `on-demand` → **Optimus**
 - Menu to switch profiles:
-  - **Integrated Graphics** → `pkexec prime-select intel`
-  - **NVIDIA** → `pkexec prime-select nvidia`
-  - **On-Demand** → `pkexec prime-select on-demand`
+  - **Integrated** → `pkexec prime-select intel`
+  - **Nvidia** → `pkexec prime-select nvidia`
+  - **Optimus** → `pkexec prime-select on-demand`
 - Polkit password prompt when switching (same privilege level as `sudo`)
 - Notification reminding you to log out or reboot after a successful switch
 
