@@ -1,7 +1,7 @@
 # Prime Control
 ![Prime Control Screenshot](screenshot.png)
 
-Prime Control is a Gnome Extension that uses the _prime-select_ feature in Nvidia's proprietary drivers to switch between GPU output profiles. Similar to older tools like envycontrol, Prime Control allows you to quickly change output modes in pursuit of performance optimization and power conservation.  
+Prime Control is a Gnome Shell Extension that uses the _prime-select_ feature in Nvidia's proprietary drivers to switch between GPU output profiles, enabling easy fine-grained performance optimization and power conservation from within your UI.
 
 ## Profiles
 
@@ -93,7 +93,3 @@ This disables the extension (when `gnome-extensions` is available) and removes:
 ```
 
 Then reload GNOME Shell (Alt+F2 → `r` on X11, or log out on Wayland) so the GPU tile disappears.
-
-## License
-
-Wildfire and its source code are licensed under the [MIT License](https://en.wikipedia.org/wiki/MIT_License). 
