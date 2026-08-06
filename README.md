@@ -78,10 +78,19 @@ gnome-shell --version
 
 ## Uninstall
 
+Run **without sudo** from this repo:
+
 ```bash
-gnome-extensions disable prime-selector@amanoske.github.com
-rm -rf ~/.local/share/gnome-shell/extensions/prime-selector@amanoske.github.com
+./uninstall.sh
 ```
+
+This disables the extension (when `gnome-extensions` is available) and removes:
+
+```text
+~/.local/share/gnome-shell/extensions/prime-selector@amanoske.github.com
+```
+
+Then reload GNOME Shell (Alt+F2 → `r` on X11, or log out on Wayland) so the GPU tile disappears.
 
 ## Notes
 
