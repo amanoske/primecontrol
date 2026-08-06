@@ -1,28 +1,26 @@
-# Prime Selector
+# Prime Control
+![Prime Control Screenshot](screenshot.png)
 
-A GNOME Shell extension that adds a **Prime Selector** tile to Quick Settings for controlling NVIDIA Optimus profiles via `prime-select`.
+Prime Control is a Gnome Extension that uses the _prime-select_ feature in Nvidia's proprietary drivers to switch between GPU output profiles. Similar to older tools like envycontrol, Prime Control allows you to quickly change output modes in pursuit of performance optimization and power conservation.  
 
-## Features
+**Note:** For some GPUs (e.g.: Ampere/RTX 30-series) you may be required to restart your system after selecting a new profile. 
 
-- Quick Settings widget modeled after Power Mode
-- Subtitle maps `prime-select query` to a short label:
-  - `intel` → **Integrated**
-  - `nvidia` → **Nvidia**
-  - `on-demand` → **Optimus**
-- Menu to switch profiles:
-  - **Integrated** → `pkexec prime-select intel`
-  - **Nvidia** → `pkexec prime-select nvidia`
-  - **Optimus** → `pkexec prime-select on-demand`
-- Polkit password prompt when switching (same privilege level as `sudo`)
-- Notification reminding you to log out or reboot after a successful switch
+## Profiles
 
-## Requirements
+Prime Control allows you to swap between three different output profiles:
 
+**Integrated**: Your computer will use your integrated graphics and disable your dedicated graphics. Ideal for strict battery conservation or for environments with low/minimal access to power (e.g.: running on airplane power ports). In prime-select query, the name of this mode is 'intel.'
+
+**Nvidia**: Your computer will use only your dedicated Nvidia GPU and disable your integrated graphics. Ideal for maximizing performance and latency in gaming and AI operations. 
+
+**Optimus**: Your computer will use Nvidia's Optimus feature, outputting via your integrated GPU and switching dynamically to your dGPU during certain types of operations (e.g.: serving LLMs, playing games). While distributions like Ubuntu may be automatic, forcing the use of a dGPU may require you to use "prime-run" command when starting a process. In prime-select query, the name of this mode is 'on-demand.'
+
+## Requirements 
 - GNOME Shell 45+
-- [`nvidia-prime`](https://launchpad.net/ubuntu/+source/nvidia-prime) (`prime-select` on `PATH`)
-- `pkexec` (polkit)
+- nvidia-prime (prime-select on PATH)
+- pkexec (polkit)
 
-## Install
+## Installation
 
 Run **without sudo** from this repo:
 
@@ -53,7 +51,7 @@ gnome-extensions enable prime-selector@amanoske.github.com
 
 Open the system menu (top-right) and look for **Prime Selector** in Quick Settings.
 
-### "Incompatible with current GNOME version"?
+### What happens if I get the error "Incompatible with current GNOME version"?
 
 Re-run `./install.sh` from an up-to-date checkout. It patches `shell-version` for your running Shell. Then reload/log out and enable again.
 
@@ -64,7 +62,7 @@ gnome-shell --version
 cat ~/.local/share/gnome-shell/extensions/prime-selector@amanoske.github.com/metadata.json
 ```
 
-### "Extension does not exist"?
+### What happens if I get the error "Extension does not exist"?
 
 That almost always means the Shell has not rescanned extensions yet. Reload/log out first, then run `enable` again.
 
@@ -76,7 +74,7 @@ gnome-extensions list | grep prime
 gnome-shell --version
 ```
 
-## Uninstall
+## Removing Prime Control
 
 Run **without sudo** from this repo:
 
@@ -92,7 +90,6 @@ This disables the extension (when `gnome-extensions` is available) and removes:
 
 Then reload GNOME Shell (Alt+F2 → `r` on X11, or log out on Wayland) so the GPU tile disappears.
 
-## Notes
+## License
 
-- Profile switches rewrite driver configuration and usually need a logout or reboot to take effect.
-- The extension uses `pkexec` instead of `sudo` so GNOME can show a graphical authentication dialog.
+Wildfire and its source code are licensed under the [MIT License](https://en.wikipedia.org/wiki/MIT_License). 
