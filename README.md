@@ -5,24 +5,30 @@ Prime Control is a Gnome Shell Extension that uses the _prime-select_ feature in
 
 ## Profiles
 
-Prime Control allows you to switch between three different output profiles:
+Prime Control allows you to switch between three different output profiles. The Quick Settings tile and menu use these labels, mapped from `prime-select query`:
 
-### Optimus (Default Profile): 
+| UI label | `prime-select` id |
+|---|---|
+| **Optimus** | `on-demand` |
+| **Integrated** | `intel` |
+| **Dedicated** | `nvidia` |
+
+### Optimus (Default Profile)
 Your computer will use Nvidia's Optimus feature, outputting most tasks with your integrated GPU by default but still powering your dedicated GPU and enabling you to dynamically execute some high performance tasks on it (e.g.: serving LLM inference, playing games).
 
-While distributions like Ubuntu may be automatic, forcing the use of a dedicated GPU for some applications or services may require you to use `prime-run` command when starting a process. 
+While distributions like Ubuntu may be automatic, forcing the use of a dedicated GPU for some applications or services may require you to use `prime-run` command when starting a process.
 
 In `prime-select query` the name of this mode is `on-demand`.
 
-### Integrated: 
+### Integrated
 Your computer will use your integrated graphics and disable your dedicated graphics. This is ideal for strict battery conservation or for environments with low/minimal access to power (e.g.: running on airplane power ports), as it will likely significantly reduce your TDP and power consumption.
 
 In `prime-select query` the name of this mode is `intel`.
 
-### Dedicated: 
+### Dedicated
 Your computer will use only your dedicated Nvidia GPU and disable your integrated graphics. Ideal for maximizing performance in gaming and AI operations, this will reduce latency by ensuring that you only will output GPU calls from your dGPU.
 
-In `prime-select query` the name of this mode is `nvidia`. 
+In `prime-select query` the name of this mode is `nvidia`.
 
 *Note:* For some GPUs (e.g.: Ampere/RTX 30-series) you may be required to restart your system after selecting a new profile.
 
