@@ -5,13 +5,7 @@ Prime Control is a Gnome Shell Extension that uses the _prime-select_ feature in
 
 ## Profiles
 
-Prime Control allows you to switch between three different output profiles. The Quick Settings tile and menu use these labels, mapped from `prime-select query`:
-
-| UI label | `prime-select` id |
-|---|---|
-| **Optimus** | `on-demand` |
-| **Integrated** | `intel` |
-| **Dedicated** | `nvidia` |
+Prime Control allows you to switch between three different output profiles:
 
 ### Optimus (Default Profile)
 Your computer will use Nvidia's Optimus feature, outputting most tasks with your integrated GPU by default but still powering your dedicated GPU and enabling you to dynamically execute some high performance tasks on it (e.g.: serving LLM inference, playing games).
@@ -37,7 +31,7 @@ In `prime-select query` the name of this mode is `nvidia`.
 - nvidia-prime (prime-select on PATH)
 - pkexec (polkit)
 
-## Installation
+## Manual Installation
 
 Run **without sudo** from this repo:
 
@@ -93,7 +87,7 @@ gnome-extensions list | grep prime
 gnome-shell --version
 ```
 
-## Removing Prime Control
+## Manual Uninstallation
 
 Run **without sudo** from this repo:
 
