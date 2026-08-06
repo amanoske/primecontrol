@@ -12,7 +12,7 @@ export const PROFILES = Object.freeze([
     },
     {
         id: 'nvidia',
-        label: 'Nvidia',
+        label: 'Dedicated',
         description: 'Use the discrete NVIDIA GPU',
     },
     {
@@ -63,7 +63,7 @@ export function queryProfile() {
 
 /**
  * Map a prime-select query id to the UI label.
- * intel → Integrated, nvidia → Nvidia, on-demand → Optimus
+ * intel → Integrated, nvidia → Dedicated, on-demand → Optimus
  *
  * @param {string} profileId
  * @returns {string}

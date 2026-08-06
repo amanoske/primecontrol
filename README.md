@@ -19,8 +19,10 @@ Your computer will use your integrated graphics and disable your dedicated graph
 
 In `prime-select query` the name of this mode is `intel`.
 
-### Nvidia: 
-Your computer will use only your dedicated Nvidia GPU and disable your integrated graphics. Ideal for maximizing performance in gaming and AI operations, this will reduce latency by ensuring that you only will output GPU calls from your dGPU. 
+### Dedicated: 
+Your computer will use only your dedicated Nvidia GPU and disable your integrated graphics. Ideal for maximizing performance in gaming and AI operations, this will reduce latency by ensuring that you only will output GPU calls from your dGPU.
+
+In `prime-select query` the name of this mode is `nvidia`. 
 
 *Note:* For some GPUs (e.g.: Ampere/RTX 30-series) you may be required to restart your system after selecting a new profile.
 

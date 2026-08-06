@@ -1,7 +1,7 @@
 {
   "uuid": "prime-selector@amanoske.github.io",
   "name": "Prime Selector",
-  "description": "Add a GPU Quick Settings tile to switch NVIDIA PRIME profiles.\n\nMaps prime-select modes to short labels:\n* Integrated (intel)\n* Nvidia (nvidia)\n* Optimus (on-demand)\n\nRequires nvidia-prime (prime-select) and pkexec. Switching profiles runs `pkexec prime-select <profile>` and usually needs a logout or reboot to apply.",
+  "description": "Add a GPU Quick Settings tile to switch NVIDIA PRIME profiles.\n\nMaps prime-select modes to short labels:\n* Integrated (intel)\n* Dedicated (nvidia)\n* Optimus (on-demand)\n\nRequires nvidia-prime (prime-select) and pkexec. Switching profiles runs `pkexec prime-select <profile>` and usually needs a logout or reboot to apply.",
   "shell-version": [
     "45",
     "46",
