@@ -68,7 +68,7 @@ gnome-extensions enable prime-selector@amanoske.github.io
 gnome-extensions enable prime-selector@amanoske.github.io
 ```
 
-Open the system menu (top-right) and look for **Prime Selector** in Quick Settings.
+Open the system menu (top-right) and look for the **GPU** tile in Quick Settings.
 
 ### What happens if I get the error "Incompatible with current GNOME version"?
 
