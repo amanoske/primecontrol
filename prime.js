@@ -1,7 +1,9 @@
 import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
 
-// prime-select query ids → UI labels shown in Quick Settings.
+// Single source of truth for UI naming.
+// id  = prime-select query / switch argument
+// label = text shown in the Quick Settings tile subtitle AND selection menu
 export const PROFILES = Object.freeze([
     {
         id: 'intel',
