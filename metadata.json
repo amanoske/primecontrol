@@ -1,18 +1,15 @@
 {
-  "uuid": "prime-selector@amanoske.github.com",
+  "uuid": "prime-selector@amanoske.github.io",
   "name": "Prime Selector",
-  "description": "Control NVIDIA PRIME GPU profiles from GNOME Quick Settings. Maps prime-select profiles to Integrated (intel), Nvidia, and Optimus (on-demand).",
+  "description": "Add a GPU Quick Settings tile to switch NVIDIA PRIME profiles.\n\nMaps prime-select modes to short labels:\n* Integrated (intel)\n* Nvidia (nvidia)\n* Optimus (on-demand)\n\nRequires nvidia-prime (prime-select) and pkexec. Switching profiles runs `pkexec prime-select <profile>` and usually needs a logout or reboot to apply.",
   "shell-version": [
     "45",
     "46",
     "47",
     "48",
     "49",
-    "50",
-    "51",
-    "52"
+    "50"
   ],
   "url": "https://github.com/amanoske/primecontrol",
-  "version": 1,
   "version-name": "1.0"
 }

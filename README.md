@@ -47,7 +47,7 @@ GNOME does not pick up a newly copied extension until the Shell reloads. Do that
 2. Then enable:
 
 ```bash
-gnome-extensions enable prime-selector@amanoske.github.com
+gnome-extensions enable prime-selector@amanoske.github.io
 ```
 
 **Wayland**
@@ -55,7 +55,7 @@ gnome-extensions enable prime-selector@amanoske.github.com
 2. Then enable:
 
 ```bash
-gnome-extensions enable prime-selector@amanoske.github.com
+gnome-extensions enable prime-selector@amanoske.github.io
 ```
 
 Open the system menu (top-right) and look for **Prime Selector** in Quick Settings.
@@ -68,7 +68,7 @@ Check:
 
 ```bash
 gnome-shell --version
-cat ~/.local/share/gnome-shell/extensions/prime-selector@amanoske.github.com/metadata.json
+cat ~/.local/share/gnome-shell/extensions/prime-selector@amanoske.github.io/metadata.json
 ```
 
 ### What happens if I get the error "Extension does not exist"?
@@ -78,7 +78,7 @@ That almost always means the Shell has not rescanned extensions yet. Reload/log 
 Confirm the files landed in your user extensions directory (not root's):
 
 ```bash
-ls ~/.local/share/gnome-shell/extensions/prime-selector@amanoske.github.com
+ls ~/.local/share/gnome-shell/extensions/prime-selector@amanoske.github.io
 gnome-extensions list | grep prime
 gnome-shell --version
 ```
@@ -94,7 +94,7 @@ Run **without sudo** from this repo:
 This disables the extension (when `gnome-extensions` is available) and removes:
 
 ```text
-~/.local/share/gnome-shell/extensions/prime-selector@amanoske.github.com
+~/.local/share/gnome-shell/extensions/prime-selector@amanoske.github.io
 ```
 
 Then reload GNOME Shell (Alt+F2 → `r` on X11, or log out on Wayland) so the GPU tile disappears.
