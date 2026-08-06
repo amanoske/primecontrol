@@ -7,11 +7,15 @@ Prime Control is a Gnome Extension that uses the _prime-select_ feature in Nvidi
 
 Prime Control allows you to swap between three different output profiles:
 
-**Integrated**: Your computer will use your integrated graphics and disable your dedicated graphics. Ideal for strict battery conservation or for environments with low/minimal access to power (e.g.: running on airplane power ports). In prime-select query, the name of this mode is 'intel.'
+**Integrated**: Your computer will use your integrated graphics and disable your dedicated graphics. Ideal for strict battery conservation or for environments with low/minimal access to power (e.g.: running on airplane power ports). 
 
-**Nvidia**: Your computer will use only your dedicated Nvidia GPU and disable your integrated graphics. Ideal for maximizing performance and latency in gaming and AI operations. 
+In prime-select query, the name of this mode is 'intel.'
 
-**Optimus**: Your computer will use Nvidia's Optimus feature, outputting via your integrated GPU and switching dynamically to your dGPU during certain types of operations (e.g.: serving LLMs, playing games). While distributions like Ubuntu may be automatic, forcing the use of a dGPU may require you to use "prime-run" command when starting a process. In prime-select query, the name of this mode is 'on-demand.'
+**Nvidia**: Your computer will use only your dedicated Nvidia GPU and disable your integrated graphics. Ideal for maximizing performance in gaming and AI operations. 
+
+**Optimus**: Your computer will use Nvidia's Optimus feature, outputting via your integrated GPU and switching dynamically to your dGPU during certain types of operations (e.g.: serving LLMs, playing games). While distributions like Ubuntu may be automatic, forcing the use of a dGPU may require you to use "prime-run" command when starting a process. 
+
+In prime-select query, the name of this mode is 'on-demand.'
 
 **Note:** For some GPUs (e.g.: Ampere/RTX 30-series) you may be required to restart your system after selecting a new profile.
 
