@@ -32,15 +32,6 @@ In `prime-select query` the name of this mode is `nvidia`.
 - pkexec (polkit)
 - nvtop (for live GPU stats in the expanded Quick Settings menu; `nvtop -s`)
 
-## Features
-
-- Quick Settings **GPU** tile with Integrated / Dedicated / Optimus profile switching
-- Expanded menu shows live stats from `nvtop -s`:
-  - Device name (`Device 0`, …)
-  - Memory used / total
-  - GPU utilization and memory utilization
-- Stats refresh about every 2 seconds while the menu is open
-
 ## Manual Installation
 
 Run **without sudo** from this repo:
