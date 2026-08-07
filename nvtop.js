@@ -47,7 +47,7 @@ function normalizeDevice(device, index) {
     const name = device?.device_name ? String(device.device_name) : 'Unknown GPU';
     const used = formatMib(device?.mem_used);
     const total = formatMib(device?.mem_total);
-    let memoryOutput = 'Memory N/A';
+    let memoryOutput = null;
     if (used && total)
         memoryOutput = `${used} / ${total}`;
     else if (total)

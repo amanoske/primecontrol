@@ -118,8 +118,11 @@ class PrimeSelectorToggle extends QuickSettings.QuickMenuToggle {
                 this._addStatsLabel(' ');
 
             this._addStatsLabel(`${device.title}: ${device.name}`);
-            this._addStatsLabel(`Memory ${device.memoryOutput}`);
-            this._addStatsLabel(`GPU ${device.gpuUtil} · Memory util ${device.memUtil}`);
+            if (device.memoryOutput)
+                this._addStatsLabel(`Memory ${device.memoryOutput}`);
+            this._addStatsLabel(
+                `GPU Utilization ${device.gpuUtil} · VRAM Utilization ${device.memUtil}`
+            );
         });
     }
 
