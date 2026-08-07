@@ -1,7 +1,7 @@
 # Prime Control
 ![Prime Control Screenshot](screenshot.png)
 
-Prime Control is a Gnome Shell Extension that uses the _prime-select_ tool in Nvidia's proprietary drivers to switch between GPU output profiles, enabling easy performance optimization and power conservation from within your System Menu/Quick Menu. 
+Prime Control is a Gnome Shell Extension that uses the _prime-select_ in NVIDIA's proprietary drivers to switch between different GPU profiles in your Quick Menu. 
 
 ## Profiles
 
