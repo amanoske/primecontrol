@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-UUID="prime-selector@amanoske.github.io"
+UUID="primeval@amanoske.github.io"
 TARGET_DIR="${HOME}/.local/share/gnome-shell/extensions/${UUID}"
 
 if [[ "${EUID}" -eq 0 ]] || [[ -n "${SUDO_USER:-}" ]]; then
