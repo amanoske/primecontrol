@@ -1,7 +1,7 @@
 # Primeval
 ![Primeval Screenshot](screenshot.png)
 
-Primeval is a GNOME Shell Extension that uses `_prime-select_` in NVIDIA's proprietary drivers to switch between different GPU profiles in your Quick Menu.
+Primeval is a GNOME Shell Extension that allows you to select different NVIDIA GPU profiles from within your Quick Menu.
 
 ## Profiles
 
