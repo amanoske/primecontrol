@@ -41,7 +41,7 @@ function formatMib(value) {
  *
  * @param {object} device
  * @param {number} index
- * @returns {{index: number, title: string, name: string, memoryOutput: string, gpuUtil: string, memUtil: string}}
+ * @returns {{index: number, title: string, name: string, memoryOutput: string|null, gpuUtil: string, memUtil: string}}
  */
 function normalizeDevice(device, index) {
     const name = device?.device_name ? String(device.device_name) : 'Unknown GPU';
