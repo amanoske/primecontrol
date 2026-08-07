@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-UUID="prime-selector@amanoske.github.io"
+UUID="primeval@amanoske.github.io"
 SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TARGET_DIR="${HOME}/.local/share/gnome-shell/extensions/${UUID}"
 
@@ -12,7 +12,7 @@ if [[ "${EUID}" -eq 0 ]] || [[ -n "${SUDO_USER:-}" ]]; then
   exit 1
 fi
 
-for required in metadata.json extension.js prime.js; do
+for required in metadata.json extension.js prime.js nvtop.js; do
   if [[ ! -f "${SOURCE_DIR}/${required}" ]]; then
     echo "error: missing ${required} in ${SOURCE_DIR}" >&2
     echo "Make sure you checked out the branch that contains the extension files." >&2
@@ -49,7 +49,7 @@ BUILD_DIR="$(mktemp -d)"
 cleanup() { rm -rf "${BUILD_DIR}"; }
 trap cleanup EXIT
 
-cp "${SOURCE_DIR}/extension.js" "${SOURCE_DIR}/prime.js" "${BUILD_DIR}/"
+cp "${SOURCE_DIR}/extension.js" "${SOURCE_DIR}/prime.js" "${SOURCE_DIR}/nvtop.js" "${BUILD_DIR}/"
 
 # Ensure the installed metadata advertises the running Shell version.
 # Extension Manager marks the extension incompatible when the major version
@@ -79,6 +79,7 @@ mkdir -p "${TARGET_DIR}"
 install -m 0644 "${BUILD_DIR}/metadata.json" "${TARGET_DIR}/metadata.json"
 install -m 0644 "${BUILD_DIR}/extension.js" "${TARGET_DIR}/extension.js"
 install -m 0644 "${BUILD_DIR}/prime.js" "${TARGET_DIR}/prime.js"
+install -m 0644 "${BUILD_DIR}/nvtop.js" "${TARGET_DIR}/nvtop.js"
 
 echo
 echo "Installed files:"
@@ -92,7 +93,7 @@ echo
 if command -v gnome-extensions >/dev/null 2>&1; then
   (
     cd "${BUILD_DIR}"
-    gnome-extensions pack --force --extra-source=prime.js
+    gnome-extensions pack --force --extra-source=prime.js --extra-source=nvtop.js
     gnome-extensions install --force ./*.shell-extension.zip
   )
   echo "Registered with gnome-extensions install."

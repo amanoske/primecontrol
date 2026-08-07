@@ -1,3 +1,4 @@
+import GLib from 'gi://GLib';
 import GObject from 'gi://GObject';
 
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
@@ -13,6 +14,10 @@ import {
     queryProfile,
     switchProfile,
 } from './prime.js';
+import {
+    NVTOP_REFRESH_MS,
+    queryNvtopSnapshotAsync,
+} from './nvtop.js';
 
 const ICON_NAME = 'video-display-symbolic';
 const TOGGLE_TITLE = 'GPU';
@@ -29,6 +34,8 @@ class PrimeSelectorToggle extends QuickSettings.QuickMenuToggle {
         this._items = new Map();
         this._switching = false;
         this._monitor = null;
+        this._statsRefreshId = 0;
+        this._statsRequestToken = 0;
         this._currentProfile = queryProfile();
 
         this.menu.setHeader(ICON_NAME, TOGGLE_TITLE, 'Choose a GPU profile');
@@ -39,9 +46,26 @@ class PrimeSelectorToggle extends QuickSettings.QuickMenuToggle {
             this._currentProfile = profileId;
             this._refresh();
         });
+
+        this._menuOpenId = this.menu.connect('open-state-changed', (_menu, isOpen) => {
+            if (isOpen)
+                this._startStatsRefresh();
+            else
+                this._stopStatsRefresh();
+        });
     }
 
     _buildMenu() {
+        this._statsSection = new PopupMenu.PopupMenuSection();
+        this._statsPlaceholder = new PopupMenu.PopupMenuItem('GPU stats unavailable', {
+            reactive: false,
+        });
+        this._statsPlaceholder.setSensitive(false);
+        this._statsSection.addMenuItem(this._statsPlaceholder);
+        this._statsRows = [];
+        this.menu.addMenuItem(this._statsSection);
+        this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
+
         this._itemsSection = new PopupMenu.PopupMenuSection();
 
         // Selection options use the same mapped labels as the tile subtitle.
@@ -62,6 +86,71 @@ class PrimeSelectorToggle extends QuickSettings.QuickMenuToggle {
         this._statusItem.setSensitive(false);
         this._statusItem.visible = false;
         this.menu.addMenuItem(this._statusItem);
+    }
+
+    _clearStatsRows() {
+        for (const row of this._statsRows)
+            row.destroy();
+        this._statsRows = [];
+    }
+
+    _addStatsLabel(text) {
+        const item = new PopupMenu.PopupMenuItem(text, {reactive: false});
+        item.setSensitive(false);
+        this._statsSection.addMenuItem(item);
+        this._statsRows.push(item);
+        return item;
+    }
+
+    _renderStats(result) {
+        this._clearStatsRows();
+
+        if (!result.ok || result.devices.length === 0) {
+            this._statsPlaceholder.label.text = result.error || 'GPU stats unavailable';
+            this._statsPlaceholder.visible = true;
+            return;
+        }
+
+        this._statsPlaceholder.visible = false;
+
+        result.devices.forEach((device, index) => {
+            if (index > 0)
+                this._addStatsLabel(' ');
+
+            this._addStatsLabel(`${device.title}: ${device.name}`);
+            this._addStatsLabel(`Memory ${device.memoryOutput}`);
+            this._addStatsLabel(`GPU ${device.gpuUtil} · Memory util ${device.memUtil}`);
+        });
+    }
+
+    _refreshStats() {
+        const token = ++this._statsRequestToken;
+        queryNvtopSnapshotAsync(result => {
+            if (token !== this._statsRequestToken)
+                return;
+            this._renderStats(result);
+        });
+    }
+
+    _startStatsRefresh() {
+        this._refreshStats();
+        this._stopStatsRefreshTimer();
+        this._statsRefreshId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, NVTOP_REFRESH_MS, () => {
+            this._refreshStats();
+            return GLib.SOURCE_CONTINUE;
+        });
+    }
+
+    _stopStatsRefreshTimer() {
+        if (this._statsRefreshId) {
+            GLib.Source.remove(this._statsRefreshId);
+            this._statsRefreshId = 0;
+        }
+    }
+
+    _stopStatsRefresh() {
+        this._statsRequestToken++;
+        this._stopStatsRefreshTimer();
     }
 
     _refresh() {
@@ -110,14 +199,14 @@ class PrimeSelectorToggle extends QuickSettings.QuickMenuToggle {
 
             if (!result.ok) {
                 const message = result.error || 'Failed to switch GPU profile';
-                Main.notify('Prime Selector', message);
+                Main.notify('Primeval', message);
                 this._statusItem.label.text = message;
                 this._statusItem.visible = true;
                 return;
             }
 
             Main.notify(
-                'Prime Selector',
+                'Primeval',
                 `Switched to ${profileLabel(result.profileId)}. Log out or reboot to apply.`
             );
             this._statusItem.label.text = 'Log out or reboot to apply changes';
@@ -126,6 +215,13 @@ class PrimeSelectorToggle extends QuickSettings.QuickMenuToggle {
     }
 
     destroy() {
+        this._stopStatsRefresh();
+
+        if (this._menuOpenId) {
+            this.menu.disconnect(this._menuOpenId);
+            this._menuOpenId = 0;
+        }
+
         if (this._monitor) {
             this._monitor.cancel();
             this._monitor = null;
