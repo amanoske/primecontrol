@@ -22,8 +22,8 @@ import {
 const ICON_NAME = 'video-display-symbolic';
 const TOGGLE_TITLE = 'GPU';
 
-const PrimeSelectorToggle = GObject.registerClass(
-class PrimeSelectorToggle extends QuickSettings.QuickMenuToggle {
+const PrimevalToggle = GObject.registerClass(
+class PrimevalToggle extends QuickSettings.QuickMenuToggle {
     _init() {
         super._init({
             title: TOGGLE_TITLE,
@@ -33,19 +33,25 @@ class PrimeSelectorToggle extends QuickSettings.QuickMenuToggle {
 
         this._items = new Map();
         this._switching = false;
-        this._monitor = null;
+        this._profileMonitor = null;
+        this._profileMonitorId = 0;
         this._statsRefreshId = 0;
         this._statsRequestToken = 0;
+        this._menuOpenId = 0;
         this._currentProfile = queryProfile();
 
         this.menu.setHeader(ICON_NAME, TOGGLE_TITLE, 'Choose a GPU profile');
         this._buildMenu();
         this._refresh();
 
-        this._monitor = monitorProfile(profileId => {
+        const watched = monitorProfile(profileId => {
             this._currentProfile = profileId;
             this._refresh();
         });
+        if (watched) {
+            this._profileMonitor = watched.monitor;
+            this._profileMonitorId = watched.handlerId;
+        }
 
         this._menuOpenId = this.menu.connect('open-state-changed', (_menu, isOpen) => {
             if (isOpen)
@@ -225,17 +231,20 @@ class PrimeSelectorToggle extends QuickSettings.QuickMenuToggle {
             this._menuOpenId = 0;
         }
 
-        if (this._monitor) {
-            this._monitor.cancel();
-            this._monitor = null;
+        if (this._profileMonitor) {
+            if (this._profileMonitorId)
+                this._profileMonitor.disconnect(this._profileMonitorId);
+            this._profileMonitor.cancel();
+            this._profileMonitor = null;
+            this._profileMonitorId = 0;
         }
 
         super.destroy();
     }
 });
 
-const PrimeSelectorIndicator = GObject.registerClass(
-class PrimeSelectorIndicator extends QuickSettings.SystemIndicator {
+const PrimevalIndicator = GObject.registerClass(
+class PrimevalIndicator extends QuickSettings.SystemIndicator {
     _init() {
         super._init();
 
@@ -243,7 +252,7 @@ class PrimeSelectorIndicator extends QuickSettings.SystemIndicator {
         this._indicator.icon_name = ICON_NAME;
         this._indicator.visible = false;
 
-        this._toggle = new PrimeSelectorToggle();
+        this._toggle = new PrimevalToggle();
         this.quickSettingsItems.push(this._toggle);
     }
 
@@ -253,9 +262,9 @@ class PrimeSelectorIndicator extends QuickSettings.SystemIndicator {
     }
 });
 
-export default class PrimeSelectorExtension extends Extension {
+export default class PrimevalExtension extends Extension {
     enable() {
-        this._indicator = new PrimeSelectorIndicator();
+        this._indicator = new PrimevalIndicator();
         Main.panel.statusArea.quickSettings.addExternalIndicator(this._indicator);
     }
 

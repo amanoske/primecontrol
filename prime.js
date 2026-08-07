@@ -152,16 +152,16 @@ export function switchProfile(profileId, callback) {
  * Watch /etc/prime-discrete for external profile changes.
  *
  * @param {(profileId: string) => void} onChange
- * @returns {Gio.FileMonitor|null}
+ * @returns {{monitor: Gio.FileMonitor, handlerId: number}|null}
  */
 export function monitorProfile(onChange) {
     try {
         const file = Gio.File.new_for_path('/etc/prime-discrete');
         const monitor = file.monitor_file(Gio.FileMonitorFlags.NONE, null);
-        monitor.connect('changed', () => {
+        const handlerId = monitor.connect('changed', () => {
             onChange(queryProfile());
         });
-        return monitor;
+        return {monitor, handlerId};
     } catch (_error) {
         return null;
     }

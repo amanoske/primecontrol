@@ -2,6 +2,8 @@ import Gio from 'gi://Gio';
 
 import {findCommand} from './prime.js';
 
+export const NVTOP_REFRESH_MS = 2000;
+
 /**
  * Repair common nvtop -s JSON quirks (missing commas between fields).
  *
@@ -16,7 +18,7 @@ function repairSnapshotJson(text) {
 }
 
 /**
- * Format byte counts from nvtop (string/number) as MiB.
+ * Format byte counts from nvtop (string/number) as MiB/GiB.
  *
  * @param {string|number|null|undefined} value
  * @returns {string|null}
@@ -66,73 +68,52 @@ function normalizeDevice(device, index) {
 }
 
 /**
- * Query GPU stats via `nvtop -s`.
+ * Parse nvtop -s stdout into normalized device stats.
  *
+ * @param {string} stdout
  * @returns {{ok: boolean, devices: object[], error?: string}}
  */
-export function queryNvtopSnapshot() {
-    const nvtop = findCommand('nvtop');
-    if (!nvtop) {
+function parseSnapshot(stdout) {
+    const raw = (stdout || '').trim();
+    if (!raw) {
         return {
             ok: false,
             devices: [],
-            error: 'nvtop not found',
+            error: 'nvtop returned no data',
         };
     }
 
+    let parsed;
     try {
-        const subprocess = Gio.Subprocess.new(
-            [nvtop, '-s'],
-            Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE
-        );
-        const [, stdout, stderr] = subprocess.communicate_utf8(null, null);
-        if (subprocess.get_exit_status() !== 0) {
-            return {
-                ok: false,
-                devices: [],
-                error: (stderr || 'nvtop -s failed').trim(),
-            };
-        }
-
-        const raw = (stdout || '').trim();
-        if (!raw) {
-            return {
-                ok: false,
-                devices: [],
-                error: 'nvtop returned no data',
-            };
-        }
-
-        let parsed;
+        parsed = JSON.parse(raw);
+    } catch (_firstError) {
         try {
-            parsed = JSON.parse(raw);
-        } catch (_firstError) {
             parsed = JSON.parse(repairSnapshotJson(raw));
-        }
-
-        if (!Array.isArray(parsed)) {
+        } catch (error) {
             return {
                 ok: false,
                 devices: [],
-                error: 'Unexpected nvtop snapshot format',
+                error: error.message || 'Failed to parse nvtop snapshot',
             };
         }
+    }
 
-        return {
-            ok: true,
-            devices: parsed.map((device, index) => normalizeDevice(device, index)),
-        };
-    } catch (error) {
+    if (!Array.isArray(parsed)) {
         return {
             ok: false,
             devices: [],
-            error: error.message || String(error),
+            error: 'Unexpected nvtop snapshot format',
         };
     }
+
+    return {
+        ok: true,
+        devices: parsed.map((device, index) => normalizeDevice(device, index)),
+    };
 }
 
 /**
- * Async variant of queryNvtopSnapshot.
+ * Query GPU stats via `nvtop -s` asynchronously.
  *
  * @param {(result: {ok: boolean, devices: object[], error?: string}) => void} callback
  */
@@ -165,36 +146,7 @@ export function queryNvtopSnapshotAsync(callback) {
                     return;
                 }
 
-                const raw = (stdout || '').trim();
-                if (!raw) {
-                    callback({
-                        ok: false,
-                        devices: [],
-                        error: 'nvtop returned no data',
-                    });
-                    return;
-                }
-
-                let parsed;
-                try {
-                    parsed = JSON.parse(raw);
-                } catch (_firstError) {
-                    parsed = JSON.parse(repairSnapshotJson(raw));
-                }
-
-                if (!Array.isArray(parsed)) {
-                    callback({
-                        ok: false,
-                        devices: [],
-                        error: 'Unexpected nvtop snapshot format',
-                    });
-                    return;
-                }
-
-                callback({
-                    ok: true,
-                    devices: parsed.map((device, index) => normalizeDevice(device, index)),
-                });
+                callback(parseSnapshot(stdout));
             } catch (error) {
                 callback({
                     ok: false,
@@ -211,5 +163,3 @@ export function queryNvtopSnapshotAsync(callback) {
         });
     }
 }
-
-export const NVTOP_REFRESH_MS = 2000;

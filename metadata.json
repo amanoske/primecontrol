@@ -1,7 +1,7 @@
 {
   "uuid": "primeval@amanoske.github.io",
   "name": "Primeval",
-  "description": "Primeval adds a GPU Quick Settings tile to switch NVIDIA PRIME profiles.\n\nMaps prime-select modes to short labels:\n* Integrated (intel)\n* Dedicated (nvidia)\n* Optimus (on-demand)\n\nExpanded menu shows live GPU stats from nvtop -s (device name, memory used/total, GPU and memory utilization).\n\nRequires nvidia-prime (prime-select), pkexec, and nvtop. Switching profiles runs `pkexec prime-select <profile>` and usually needs a logout or reboot to apply.",
+  "description": "Primeval adds a GPU Quick Settings tile to switch NVIDIA PRIME profiles.\n\nMaps prime-select modes to short labels:\n* Integrated (intel)\n* Dedicated (nvidia)\n* Optimus (on-demand)\n\nWhen the menu is expanded, shows live GPU stats from `nvtop -s` (device name, memory used/total when available, GPU Utilization, and VRAM Utilization). Stats are queried only while the menu is open.\n\nRequires nvidia-prime (`prime-select`), pkexec, and nvtop. Switching profiles runs `pkexec prime-select <profile>` (system prime-select binary) and usually needs a logout or reboot to apply.",
   "shell-version": [
     "45",
     "46",
