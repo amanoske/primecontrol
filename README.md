@@ -112,25 +112,3 @@ This disables the extension (when `gnome-extensions` is available) and removes:
 ```
 
 Then reload GNOME Shell (Alt+F2 → `r` on X11, or log out on Wayland) so the GPU tile disappears.
-
-## Submitting to extensions.gnome.org
-
-Build a review zip that contains **only** the extension runtime files:
-
-```bash
-chmod +x ./pack-ego.sh
-./pack-ego.sh
-```
-
-The zip includes:
-
-```text
-metadata.json
-extension.js
-prime.js
-nvtop.js
-```
-
-Do **not** put `install.sh`, `uninstall.sh`, `README.md`, or `screenshot.png` in the zip. Upload the screenshot separately in the EGO web UI.
-
-Before upload, confirm `metadata.json` `shell-version` lists only GNOME Shell versions you have tested.
